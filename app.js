@@ -9,6 +9,7 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 const app          = express();
+const Ironhacker   = require("./models/user")
 
 
 mongoose.Promise = Promise;
@@ -31,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Express View engine setup
-
 app.use(require('node-sass-middleware')({
   src:  path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -49,51 +49,49 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-//== required session for login
-app.use(session({
-  secret: "our-passport-local-strategy-app",
-  resave: true,
-  saveUninitialized: true
-}));
+// //== required session for login
+// app.use(session({
+//   secret: "our-passport-local-strategy-app",
+//   resave: true,
+//   saveUninitialized: true
+// }));
 
-// default value for title on every page
-app.locals.title = 'Express - Generated with IronGenerator';
 
-//== passport config area
-passport.serializeUser((user, cb) => {//serializes user data
-  cb(null, user._id);//cb = callback
-});
+// //== passport config area
+// passport.serializeUser((user, cb) => {//serializes user data
+//   cb(null, user._id);//cb = callback
+// });
 
-passport.deserializeUser((id, cb) => {
-  User.findById(id, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-//== running passport through middleware
+// passport.deserializeUser((id, cb) => {
+//   User.findById(id, (err, user) => {
+//     if (err) { return cb(err); }
+//     cb(null, user);
+//   });
+// });
+// //== running passport through middleware
 
-passport.use(new LocalStrategy({
-  passReqToCallback: true
-}, (req, username, password, next) => {
-  User.findOne({ username }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {//don't find user
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {//== compares psswrd hash
-      return next(null, false, { message: "Incorrect password" });
-    }
+// passport.use(new LocalStrategy({
+//   passReqToCallback: true
+// }, (req, username, password, next) => {
+//   User.findOne({ username }, (err, user) => {
+//     if (err) {
+//       return next(err);
+//     }
+//     if (!user) {//don't find user
+//       return next(null, false, { message: "Incorrect username" });
+//     }
+//     if (!bcrypt.compareSync(password, user.password)) {//== compares psswrd hash
+//       return next(null, false, { message: "Incorrect password" });
+//     }
 
-    return next(null, user);
-  });
-}));
+//     return next(null, user);
+//   });
+// }));
 
-//== flash & pssport middleware(s)
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+// //== flash & pssport middleware(s)
+// app.use(flash());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const index = require('./routes/index');
 app.use('/', index);
