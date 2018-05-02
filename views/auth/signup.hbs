@@ -11,6 +11,14 @@
     <input id="password" type="password" name="password" placeholder="Password Here">
     
     <br><br>
+    
+    {{#if message}}
+    
+    <div class="error-message">{{ message }}</div>
+    
+    {{/if}}
+    
+    <br>
 
 
 <button>Submit</button>

@@ -4,6 +4,7 @@ const Ironhacker = require('../models/user');
 const bcrypt     = require("bcrypt");
 const bcryptSalt = 10;
 const flash      = require("connect-flash");
+const passport   = require("passport");
 
 
 //== signup page
@@ -19,7 +20,7 @@ router.get('/signup', (req, res, next) => { //create url name
     
         //==if username or password are empty strings, reponse w/ and render a message
         if(username === "" || password === ""){
-            res.render("auth/signup", {message: "Invalid Username or Password"})
+            res.render("auth/signup", {message: "Invalid Username or Password!"});
             return;
         }
     
