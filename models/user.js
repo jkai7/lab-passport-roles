@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 const ironSchema = new Schema({
     username: {type: String, require: true},
     password: {type: String, require: true},
+    role:{
+    type: String,
     enum: ["Boss", "Developer", "TA"],
     default: "Developer"
+    }
 });
 
 const Ironhacker = mongoose.model("Ironhacker", ironSchema);

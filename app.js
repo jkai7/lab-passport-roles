@@ -14,7 +14,7 @@ const Ironhacker   = require("./models/user")
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/lab-passport-roles', {useMongoClient: true})
+  .connect('mongodb://localhost/lab-Ironhacker-roles', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
@@ -47,7 +47,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Ironhacker';
 
 // //== required session for login
 // app.use(session({
@@ -93,8 +93,12 @@ app.locals.title = 'Express - Generated with IronGenerator';
 // app.use(passport.initialize());
 // app.use(passport.session());
 
+//=routes of the hbs files to be used by ap..js
 const index = require('./routes/index');
 app.use('/', index);
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/', authRoutes);
 
 
 module.exports = app;
